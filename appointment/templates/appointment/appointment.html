@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="card-modal">
+  <div class="title-card">
+
+        <div class=" title-text">{{weekday}} {{day}}/{{month}}/{{year}}</div>
+        <div class="left-button"><button type="button" onclick="previousDay('{{year}}-{{month}}-{{day}}')" class="btn" style="background-color:#00415a;color:white;width:100px;">Previous</button></div>
+        <div class="right-button"><button type="button" onclick="nextDay('{{year}}-{{month}}-{{day}}')" class="btn" style="background-color:#00415a;color:white;width:100px;">Next</button></div>
+  </div>
+  {% for appointment in appointment_list %}
+
+  <div class="card m-3" onclick="cardClick()">
+    <div class="card-body">
+       <div class="row">
+        <div class="col-sm-2">{{ appointment.get_appointment_time_display }}</div>
+        <div class="col-sm-4">{{ appointment.person.person_name }}</div>
+        <div class="col-sm-4">{{ appointment.person.person_address}}</div>
+        {% if appointment.appointment_status == 1 %}
+         <div class="col-sm-2"><span class="badge badge-success" style="font-size:15px;width:80px">Finished</span></div>
+        {% elif appointment.appointment_status == 0 %}
+        <div class="col-sm-2"><span class="badge badge-info"  style="font-size:15px;width:80px">Pending</span></div>
+        {% elif appointment.appointment_status == 2 %}
+        <div class="col-sm-2"><span class="badge badge-danger"  style="font-size:15px;width:80px">Canceled</span></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <script type="text/javascript">
+    function previousDay(date){
+      var yesterday = new Date(date);
+      yesterday.setDate(yesterday.getDate()-1);
+      var locationString= "/appointment/"+yesterday.getFullYear();
+      if(yesterday.getMonth()+1<10){
+        locationString+='-0'+(yesterday.getMonth()+1);
+      }
+      else{
+        locationString+='-'+(yesterday.getMonth()+1);
+      }
+      if(yesterday.getDate()<10){
+        locationString+='-0'+yesterday.getDate();
+      }
+      else{
+        locationString+='-'+yesterday.getDate();
+      }
+      window.location.href =locationString;
+    }
+    function nextDay(date){
+      var tommorow = new Date(date);
+      tommorow.setDate(tommorow.getDate()+1);
+      var locationString= "/appointment/"+tommorow.getFullYear();
+      if(tommorow.getMonth()+1<10){
+        locationString+='-0'+(tommorow.getMonth()+1);
+      }
+      else{
+        locationString+='-'+(tommorow.getMonth()+1);
+      }
+      if(tommorow.getDate()<10){
+        locationString+='-0'+tommorow.getDate();
+      }
+      else{
+        locationString+='-'+tommorow.getDate();
+      }
+      window.location.href =locationString;
+    }
+    function cardClick(event){
+      alert("test");
+      event.target.classList.add("dark");
+    }
+  </script>
+</div>
+{% endblock %}
