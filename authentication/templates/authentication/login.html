@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+  <div class="card-modal" style="width:80%;max-width:500px">
+    <div class="title-card">
+          <div class=" title-text">Login</div>
+    </div>
+
+      <div style="margin-bottom:20px;" >
+        <div class="card-body">
+
+          <form action='.' method="POST">{% csrf_token %}
+
+
+            <div class="form-group col-md-12">
+              <label>Email address</label>
+              <input type="email" class="form-control" placeholder="">
+            </div> <!-- form-group end.// -->
+
+            <div class="form-group col-md-12">
+              <label>Password</label>
+                <input class="form-control" type="password">
+            </div> <!-- form-group end.// -->
+
+
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+          </div>
+          {% bootstrap_messages %}
+
+          </form>
+          <small class="form-text text-muted">Don't have and acount? <a href="#" style="color:blue">Sign up here</a></small>
+
+        </div>
+    </div>
+  </div>
+
+{% endblock %}
